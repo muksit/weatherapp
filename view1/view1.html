@@ -1,0 +1,56 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-10">
+			<h1>The Current Weather Is:</h1>
+			<div class="row weathercard fadeIn" ng-repeat="city in cityWeatherArray" id="{{city.concatCityName}}" >
+				<div class="col-xs-12">
+					<h1>{{city.cityName}}, {{city.countryName}}</h1>
+				</div>
+				<div class="row nopadding">
+					<div class="col-xs-3 weathericon">
+						<span ng-if="city.weatherID == '01d' || city.weatherID=='01n' " class="icon-sun"></span>
+						<span ng-if="city.weatherID == '02d' || city.weatherID=='02n' " class="icon-cloud-sun-1"></span>
+						<span ng-if="city.weatherID == '03d' || city.weatherID=='03n' " class="icon-cloud"></span>
+						<span ng-if="city.weatherID == '04d' || city.weatherID=='04n' " class="icon-cloud"></span>
+						<span ng-if="city.weatherID == '09d' || city.weatherID=='09n' " class="icon-rain"></span>
+						<span ng-if="city.weatherID == '10d' || city.weatherID=='10n' " class="icon-rain"></span>
+						<span ng-if="city.weatherID == '11d' || city.weatherID=='11n' " class="icon-flash-outline"></span>
+						<span ng-if="city.weatherID == '13d' || city.weatherID=='13n' " class="icon-snow-1"></span>
+						<span ng-if="city.weatherID == '50d' || city.weatherID=='50n' " class="icon-wind"></span>
+					</div>
+					<div class="col-xs-6 description">
+						<h2>{{city.weather| uppercase}}</h2>
+					</div>
+					<div class="col-xs-3">
+						<h2><span class="temp" ng-if="temp=='1'">{{city.temp.celcius}}<i ng-if="temp =='1'"class="icon-celcius degrees"></i></span>
+							<span class="temp" ng-if="temp=='2'">{{city.temp.fahrenheit}}</span><span ng-if="temp=='2'"class="icon-fahrenheit degrees"></span>
+						</h2>
+					</div>
+				</div>
+				<div class="row nopadding">
+					<div class="col-xs-6 nopadding"><h6>Sunrise {{city.sunrise}} AM (ET) </h6></div>
+					<div class="col-xs-6 nopadding"><h6>Sunset {{city.sunset}} PM (ET)</h6></div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-2">
+			<div class="radiocontainer affix">
+				<div class="radio">
+				  <label>
+				    <input type="radio" ng-model="temp" name="optionsRadios" id="optionsRadios1" value="1" checked>
+				    Celcius
+				  </label>
+				</div>
+				<div class="radio">
+				  <label>
+				    <input type="radio" ng-model="temp" name="optionsRadios" id="optionsRadios2" value="2">
+				    Farenheit
+				  </label>
+				</div>
+			</div>
+		</div>	
+	</div> <!-- row -->
+</div> <!-- container -->
+
+
+
