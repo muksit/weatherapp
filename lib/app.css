@@ -1,61 +1,58 @@
 /* app css stylesheet */
 body{
-  color: #ffffff;
-  background-color: #982222;
- 
+  background-color: black;
 }
-.menu {
-  list-style: none;
-  border-bottom: 0.1em solid black;
-  margin-bottom: 2em;
-  padding: 0 0 0.5em;
+.title{
+  color:white;
+  text-align: center;
 }
-
-.menu:before {
-  content: "[";
+.name{
+  font-family: 'Archivo Narrow', sans-serif;
+  text-align: center;
 }
-
-.menu:after {
-  content: "]";
-}
-
-.menu > li {
-  display: inline;
-}
-
-.menu > li:before {
-  content: "|";
-  padding-right: 0.3em;
-}
-
-.menu > li:nth-child(1):before {
-  content: "";
-  padding: 0;
-}
-
 .weathericon{
     font-size: 82px;
 }
-
-.description{
-  padding-top: 20px;
-}
-
 .temp{
-  font-size: 60px;
-  padding-bottom: 30px;
+  font-size: 80px;
+  display: inline-block;
+}
+.tempselector{
+  padding-top: 30px;
+  text-align: center;
+}
+.addcityform{
+  padding-top: 30px;
+  text-align: center;
+}
+.description{
+  font-family: 'Alegreya Sans SC', sans-serif;
+  font-size: 20px;
 }
 .degrees{
   font-size: 82px;
   margin-left: -30px;
   margin-bottom: -10px;
 }
+.btn-group>.btn.active{
+  background-color: #FFC629;
+  color:black;
+}
+.btn-default{
+  background-color: black;
+  color:white;
+}
+.btn-default:hover{
+  background-color: #FFC629;
+  color:black;
+}
 .weathercard{
-  border:2px solid;
-  border-radius:4px;
-  margin-top:25px;
-  background-color: #982222;
-
+  border:2px solid white;
+  border-radius:5px;
+  margin-right:30px;
+  margin-top:30px;
+  background-color: #FFC629;
+  color:black;
 }
 .weathercard:hover{
   opacity:0.7;
@@ -64,10 +61,11 @@ body{
 .weathercard > .row{
   text-align: center;
 }
-.nopadding{
-  margin: 0px !important;
-  padding: 0px !important;
+.cardcontainer{
+  padding-left: 50px !important;
 }
-.radiocontainer{
-  top:250px;
+#submit{
+  background-color:white;
+  color:black;
 }
+
