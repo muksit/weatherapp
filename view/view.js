@@ -19,7 +19,12 @@ angular.module('weatherApp')
 	
 
 	//set Fahrenheit as default
-	vm.temp = 1;
+	$scope.temp = {
+		unit: 0
+	};
+
+	$scope.$watch('vm.temp');
+
 
 	var mapList = function(array){
 		var answer = _.map(array, 'name');
@@ -51,7 +56,6 @@ angular.module('weatherApp')
 				vm.error = null;
 				var newCity = createWeatherObject(data, cityId);
 				vm.cityWeatherArray.push(newCity);
-				console.log(vm.cityWeatherArray);
 				mapList(vm.cityWeatherArray);
 			}
 			

@@ -5,12 +5,12 @@
 				<h1>Current Weather</h1>
 			</div>
 			<div class="col-xs-12 tempselector">
-				<div class="btn-group" data-toggle="buttons" ng-model="controller.temp" bs-radio-group>
-					<label class="btn btn-default" value="1">
-				    	<input type="radio" name="optionsRadios" id="optionsRadios1" value="1" checked> Fahrenheit
+				<div class="btn-group" ng-model="temp.unit" bs-radio-group>
+					<label class="btn btn-default" value="true">
+				    	<input type="radio" value="0" > Fahrenheit
 					</label>
-					<label class="btn btn-default" value="2">
-				    	<input type="radio" name="optionsRadios" id="optionsRadios2" value="2"> Celcius
+					<label class="btn btn-default">
+				    	<input type="radio" value="1"> Celcius
 					</label>
 				</div>
 			</div>
@@ -50,14 +50,15 @@
 				</div>
 				<div class="col-xs-6 ">
 					<h2>
-					<span class="temp" ng-if="controller.temp === 2">
-						{{city.temp.celcius}}
-						<i class="icon-celcius degrees"></i>
-					</span>
-					<span class="temp" ng-if="controller.temp === 1">
-						{{city.temp.fahrenheit}}
-						<i class="icon-fahrenheit degrees"></i>
-					</span>
+						<span class="temp" ng-if="temp.unit === 1">
+							{{city.temp.celcius}}
+							<i  class="icon-celcius degrees"></i>
+						</span>
+						<span class="temp" ng-if="temp.unit === 0">
+							{{city.temp.fahrenheit}}
+							<i class="icon-fahrenheit degrees"></i>
+						</span>
+						
 					</h2>
 				</div>
 			</div>
