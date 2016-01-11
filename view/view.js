@@ -1,73 +1,81 @@
 'use strict';
 
-angular.module('myApp.view', ['ngRoute', 'mgcrea.ngStrap'])
+angular.module('weatherApp')
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/view', {
     templateUrl: 'view/view.html',
-    controller: 'ViewCtrl as v1'
+    controller: 'MainController as controller'
   });
 }])
-.controller('ViewCtrl', ['$scope', '$http',
+.controller('MainController', ['$scope', '$http',
   function($scope, $http) {
-  	var vm = this;
-  	vm.cityWeatherArray= [];
-	
-	//object holding weather data for a city
-	var cityWeather = function cityWeather(){
-		this.cityName = '';
-		this.concatCityName = '';
-		this.countryName ='';
-		this.weather='';
-		this.weatherID='';
-		this.temp='';
-	}
 
-	//load list of cities for typeahead
-	$scope.typelist = masterList;
+  	var vm = this;
+  	var appId = config.appId;
+  	var masterMap = {};
+  	vm.cityWeatherArray = [];
+	$scope.typeList = masterList;
 	
+
 	//set Fahrenheit as default
-	$scope.button = {
-		"radio": 1
+	vm.temp = 1;
+
+	var mapList = function(array){
+		var answer = _.map(array, 'name');
+		masterMap = answer;
 	};
 
-	var getWeather = function(cityidlist){
-  		var cityString= convertArray(cityidlist); //calling helper function in util.js
-		var weatherUrl = "http://api.openweathermap.org/data/2.5/group?id=" + cityString +"&units=metric&APPID=cfc04876b1398f3e1a86c5e795466757";
-		$http({method: 'GET', url: weatherUrl})
-		.success(function(data) {
+	var createWeatherObject = function(data, cityId){
+		var cityinfo = {};
+		cityinfo.cityId = cityId;
+		cityinfo.cityName = data.name;
+		cityinfo.countryName = data.sys.country; 
+		cityinfo.weather = data.weather[0].description;
+		cityinfo.weatherID = data.weather[0].icon;
+		cityinfo.temp = {
+			celcius: Math.round(data.main.temp), 
+			fahrenheit: Math.round(data.main.temp*(9/5)+32)
+		};
+		return cityinfo;
+	};
 
-		//Create object for each city returned and push to array
-		for (var i=0; i<data.list.length; i++){
-			var currentcity = data.list[i]
-			var cityinfo = new cityWeather()
-			cityinfo.concatCityName = currentcity.name.replace(/\s+/g, '');
-			cityinfo.cityName = currentcity.name;
-			cityinfo.countryName = currentcity.sys.country; 
-			cityinfo.weather = currentcity.weather[0].description;
-			cityinfo.weatherID = currentcity.weather[0].icon;
-			cityinfo.temp = {celcius: (Math.round(currentcity.main.temp)), fahrenheit: Math.round(currentcity.main.temp*(9/5)+32)};
-			vm.cityWeatherArray.push(cityinfo);
+	var getWeather = function(cityId){
+		var apiUrl = "http://api.openweathermap.org/data/2.5/weather?id=" + cityId +"&units=metric&APPID=" + appId;
+		$http({method: 'GET', url: apiUrl})
+		.success(function(data) {
+			if (data.cod == '404'){
+				vm.error = data.message;
 			}
-		}).
-		error(function(data, status) {
+			else{
+				vm.error = null;
+				var newCity = createWeatherObject(data, cityId);
+				vm.cityWeatherArray.push(newCity);
+				console.log(vm.cityWeatherArray);
+				mapList(vm.cityWeatherArray);
+			}
+			
+		})
+		.error(function(data, status) {
 		  $scope.data = data || "Request failed";
 		  $scope.status = status;
 		});
-	}
+	};
 
-	//initial call with London and NYC Ids
-	getWeather([2643743, 5128581]);
-
+	vm.remove = function(index){
+		vm.cityWeatherArray.splice(index, 1);
+	};
 
 	$scope.submit = function() {
         if ($scope.selectedCity){
-        var cityId = _(masterList)
-			.filter(function(city){ return city.name == $scope.selectedCity})
-			.pluck('id')
-			.value();
-		getWeather([cityId[0]]);
+        var cityId = $scope.selectedCity.id;
+		getWeather(cityId);
         $scope.selectedCity = '';
         }
       };
+
+
+    //initial card for London
+	getWeather(2643743);
+
 }]);

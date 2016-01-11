@@ -14,7 +14,7 @@ body{
     font-size: 82px;
 }
 .temp{
-  font-size: 80px;
+  font-size: 60px;
   display: inline-block;
 }
 .tempselector{
@@ -28,6 +28,7 @@ body{
 .description{
   font-family: 'Alegreya Sans SC', sans-serif;
   font-size: 20px;
+  white-space: nowrap;
 }
 .degrees{
   font-size: 82px;
@@ -53,11 +54,10 @@ body{
   margin-top:30px;
   background-color: #FFC629;
   color:black;
+  position:relative;
+  z-index: 2;
 }
-.weathercard:hover{
-  opacity:0.7;
-  cursor:pointer;
-}
+
 .weathercard > .row{
   text-align: center;
 }
@@ -68,4 +68,40 @@ body{
   background-color:white;
   color:black;
 }
+.remove{
+  position:absolute;
+  top:5px;
+  right:5px;
+  z-index: 5;
+}
+.remove:hover{
+  cursor: pointer;
+}
+.fa {
+  font-size:40px;
+}
+#error{
+  color:white;
+}
+.dropdown-menu:hover {
+  cursor: pointer;
+}
+.temp{
+  white-space: nowrap;
+}
+.form-inline .form-control {
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
+}
+
+@media (min-width: 0px){
+  .weathercard {
+    min-width: 350px;
+  }
+}
+
+
+
+
 

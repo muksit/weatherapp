@@ -2,32 +2,34 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<div class="col-xs-12 title">
-				<h1>Weather Around the World</h1>
+				<h1>Current Weather</h1>
 			</div>
 			<div class="col-xs-12 tempselector">
-				<div class="btn-group" data-toggle="buttons" ng-model="button.radio" bs-radio-group>
+				<div class="btn-group" data-toggle="buttons" ng-model="controller.temp" bs-radio-group>
 					<label class="btn btn-default" value="1">
-				    	<input type="radio" ng-model="v1.temp" name="optionsRadios" id="optionsRadios1" value="1" checked> Fahrenheit
+				    	<input type="radio" name="optionsRadios" id="optionsRadios1" value="1" checked> Fahrenheit
 					</label>
 					<label class="btn btn-default" value="2">
-				    	<input type="radio" ng-model="v1.temp" name="optionsRadios" id="optionsRadios2" value="2"> Celcius
+				    	<input type="radio" name="optionsRadios" id="optionsRadios2" value="2"> Celcius
 					</label>
 				</div>
 			</div>
 			<div class="col-xs-12 addcityform">
-				<form class="form-inline" ng-submit="submit()" role="form"> 
+				<form class="form-inline" ng-submit="submit()" role="form" autocomplete="off"> 
 					<div class="form-group">
-					    <input type="text" class="form-control" ng-model="selectedCity" data-min-length="1" data-limit="6"  data-animation="am-flip-x" ng-options="pairs.name as pairs.name for pairs in typelist" data-delay="900" placeholder="Add another city" name="text" bs-typeahead>
-					    <input type="submit" class="btn" id="submit" value="Add Card">
+					    <input type="text" class="form-control" ng-model="selectedCity" data-min-length="3" ng-options="city.name for city in typeList" placeholder="Add another city" name="text" bs-typeahead>
+					    <button type="submit" class="btn btn-default" id="submit">Add Card</button>
 					</div>
 				</form>
+				<p id="error">{{controller.error}}</p>
 			</div>
 		</div>	
 	</div>
-	<div class="row cardcontainer">
-		<div class="col-md-5 weathercard fadeIn" ng-repeat="city in v1.cityWeatherArray" id="{{city.concatCityName}}" >
+	<div class="row cardcontainer text-center">
+		<div class=" col-sm-4  col-md-5 weathercard fadeIn" ng-repeat="city in controller.cityWeatherArray track by $index" id="{{city.concatCityName}}">
 			<div class="col-xs-12 name">
 				<h1>{{city.cityName}}, {{city.countryName}}</h1>
+				<span class="remove" ng-click="controller.remove($index)"><i class="fa fa-times-circle"></i></span>
 			</div>
 			<div class="row nopadding">
 				<div class="col-xs-6 weathericon">
@@ -47,8 +49,15 @@
 					</div>
 				</div>
 				<div class="col-xs-6 ">
-					<h2><span class="temp" ng-if="button.radio=='2'">{{city.temp.celcius}}<i ng-if="button.radio =='2'"class="icon-celcius degrees"></i></span>
-						<span class="temp" ng-if="button.radio=='1'">{{city.temp.fahrenheit}}</span><span ng-if="button.radio=='1'"class="icon-fahrenheit degrees"></span>
+					<h2>
+					<span class="temp" ng-if="controller.temp === 2">
+						{{city.temp.celcius}}
+						<i class="icon-celcius degrees"></i>
+					</span>
+					<span class="temp" ng-if="controller.temp === 1">
+						{{city.temp.fahrenheit}}
+						<i class="icon-fahrenheit degrees"></i>
+					</span>
 					</h2>
 				</div>
 			</div>
